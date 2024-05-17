@@ -1,0 +1,45 @@
+struct EmployeeRules
+{
+    char leaves[50];
+    char examDuty[50];
+    char reportingTime[50];
+    char dressCode[50];
+};
+
+struct EmployeeFacilities
+{
+    char insurance[50];
+    char parkingPass[50];
+    char foodPass[50];
+    char gym[50];
+    char library[50];
+    char ticketsForConcerts[50];
+    char vacations[50];
+    char teamOutings[50];
+};
+
+void displayEmployeeRules()
+{
+    struct EmployeeRules rules = {"10", "30 mins prior to exam start time", "9:00 AM", "Men- Formals or Casuals, Females - Saree or Suit"};
+
+    printf("\nEmployee Rules:\n");
+    printf("Leaves: %s\n", rules.leaves);
+    printf("Exam Duty: %s\n", rules.examDuty);
+    printf("Reporting Time: %s\n", rules.reportingTime);
+    printf("Dress Code: %s\n", rules.dressCode);
+}
+
+void displayEmployeeFacilities()
+{
+    struct EmployeeFacilities facilities = {"INR 5 Lakh for the whole family of the Employee", "Four and Two wheeler", "INR 3000 per month", "Free Early Membership", "Unlimited Access", "One for the employee and a plus onme", "One week Paid Leave", "One Per Year"};
+
+    printf("\nEmployee Facilities:\n");
+    printf("Insurance: %s\n", facilities.insurance);
+    printf("Parking Pass: %s\n", facilities.parkingPass);
+    printf("Food Pass: %s\n", facilities.foodPass);
+    printf("Gym: %s\n", facilities.gym);
+    printf("Library: %s\n", facilities.library);
+    printf("Tickets for Concerts: %s\n", facilities.ticketsForConcerts);
+    printf("Vacations: %s\n", facilities.vacations);
+    printf("Team Outings: %s\n", facilities.teamOutings);
+}
