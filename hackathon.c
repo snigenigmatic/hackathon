@@ -105,11 +105,18 @@ int main()
             createEmployee();
             break;
         case 2:
+            displayEmployeeRules();
+        case 3:
+            displayEmployeeFacilities();
+        case 4:
+            disp_emp(employees, numEmployees);
+            break;  
+        case 5:
             printf("Enter the department: ");
             scanf("%s", department);
             displayAndWriteToCSV(department);
             break;
-        case 3:
+        case 6:
             printf("Exiting...\n");
             break;
         default:
@@ -179,6 +186,9 @@ void displayEmployeeFacilities()
 void displayAndWriteToCSV(char *department)
 {
     int found = 0;
+    int count;
+    printf("Enter the number of employees: ");
+    scanf("%d", &count);
     FILE *file = fopen("PESU.csv", "w");
 
     if (file == NULL)
@@ -221,3 +231,69 @@ void displayAndWriteToCSV(char *department)
     }
 }
 
+void disp_emp(Employee *x, int count)
+{
+    printf("Enter employee department(ECE/CS/BT/PHY/CHEM): ");
+    char dept[4];
+    scanf("%s", dept);
+
+    printf("Employees display: \n");
+    for (int j = 0; j < count; j++)
+    {
+        if (x->department == dept)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if ((x + i)->designation == "HOD")
+                {
+                    printf("HOD: %s\n", (x + i)->designation);
+                }
+
+                else if ((x + i)->designation == "DEAN")
+                {
+                    printf("DEAN: %s\n", (x + i)->designation);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                printf("Associate Professors: \n");
+                if ((x + i)->designation == "Associate Professor")
+                {
+                    printf("%s\n", (x + i)->designation);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                printf("Associate Professors: \n");
+                if ((x + i)->designation == "Associate Professor")
+                {
+                    printf("%s", (x + i)->designation);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                printf("Assisstant Professors: \n");
+                if ((x + i)->designation == "Assisstant Professor")
+                {
+                    printf("%s", (x + i)->designation);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                printf("Lab instructor: \n");
+                if ((x + i)->designation == "Lab instructor")
+                {
+                    printf("%s", (x + i)->designation);
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                printf("Attendor: \n");
+                if ((x + i)->designation == "Attendor")
+                {
+                    printf("%s", (x + i)->designation);
+                }
+            }
+        }
+    }
+}
