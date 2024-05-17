@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_MENU_OPTIONS 10
+#define MAX_OPTION_LENGTH 30
 
 void displayMenu(const char *title, const char *options[], int numOptions) {
     printf("\n=== %s ===\n", title);
@@ -13,55 +15,42 @@ void displayMenu(const char *title, const char *options[], int numOptions) {
 
 int getUserChoice(int numOptions) {
     int choice;
-    printf("Enter your choice: ");
-    while (scanf("%d", &choice) != 1 || choice < 0 || choice > numOptions) {
-        printf("Invalid input. Please enter a number between 0 and %d: ", numOptions);
-        while (getchar() != '\n'); // clear the input buffer
-    }
+    char input[MAX_OPTION_LENGTH];
+    do {
+        printf("Enter your choice: ");
+        if (fgets(input, sizeof(input), stdin) == NULL) {
+            return -1; // Error reading input
+        }
+        if (sscanf(input, "%d", &choice) != 1 || choice < 0 || choice > numOptions) {
+            printf("Invalid input. Please enter a number between 0 and %d: ", numOptions);
+        } else {
+            break;
+        }
+    } while (1);
     return choice;
 }
 
-void handleSubmenu1Option(int choice) {
-    switch (choice) {
-        case 1:
-            printf("Submenu 1 - Option 1 selected.\n");
-            // Add your submenu 1 option 1 handling code here
-            break;
-        case 2:
-            printf("Submenu 1 - Option 2 selected.\n");
-            // Add your submenu 1 option 2 handling code here
-            break;
-        // Add more cases as needed for additional submenu 1 options
-        default:
-            printf("Returning to main menu...\n");
-            break;
-    }
-}
-
-void handleSubmenu2Option(int choice) {
-    switch (choice) {
-        case 1:
-            printf("Submenu 2 - Option 1 selected.\n");
-            // Add your submenu 2 option 1 handling code here
-            break;
-        case 2:
-            printf("Submenu 2 - Option 2 selected.\n");
-            // Add your submenu 2 option 2 handling code here
-            break;
-        // Add more cases as needed for additional submenu 2 options
-        default:
-            printf("Returning to main menu...\n");
-            break;
+void handleSubmenuOption(int choice, const char *options[], int numOptions) {
+    if (choice >= 1 && choice <= numOptions) {
+        printf("%s selected.\n", options[choice - 1]);
+        // Add your option handling code here
+    } else {
+        printf("Returning to main menu...\n");
     }
 }
 
 void mainMenu() {
     const char *mainMenuTitle = "Main Menu";
-    const char *mainMenuOptions[] = {
-        "Submenu 1",
-        "Submenu 2"
-    };
-    int numMainMenuOptions = 2;
+    const char *mainMenuOptions[] = {"Submenu 1", "Submenu 2"};
+    int numMainMenuOptions = sizeof(mainMenuOptions) / sizeof(mainMenuOptions[0]);
+
+    const char *submenu1Title = "Submenu 1";
+    const char *submenu1Options[] = {"Submenu 1 - Option 1", "Submenu 1 - Option 2"};
+    int numSubmenu1Options = sizeof(submenu1Options) / sizeof(submenu1Options[0]);
+
+    const char *submenu2Title = "Submenu 2";
+    const char *submenu2Options[] = {"Submenu 2 - Option 1", "Submenu 2 - Option 2"};
+    int numSubmenu2Options = sizeof(submenu2Options) / sizeof(submenu2Options[0]);
 
     int choice;
     do {
@@ -69,42 +58,18 @@ void mainMenu() {
         choice = getUserChoice(numMainMenuOptions);
         switch (choice) {
             case 1:
-                {
-                    const char *submenu1Title = "Submenu 1";
-                    const char *submenu1Options[] = {
-                        "Submenu 1 - Option 1",
-                        "Submenu 1 - Option 2"
-                    };
-                    int numSubmenu1Options = 2;
-
-                    int submenu1Choice;
-                    do {
-                        displayMenu(submenu1Title, submenu1Options, numSubmenu1Options);
-                        submenu1Choice = getUserChoice(numSubmenu1Options);
-                        if (submenu1Choice != 0) {
-                            handleSubmenu1Option(submenu1Choice);
-                        }
-                    } while (submenu1Choice != 0);
-                }
+                do {
+                    displayMenu(submenu1Title, submenu1Options, numSubmenu1Options);
+                    choice = getUserChoice(numSubmenu1Options);
+                    handleSubmenuOption(choice, submenu1Options, numSubmenu1Options);
+                } while (choice != 0);
                 break;
             case 2:
-                {
-                    const char *submenu2Title = "Submenu 2";
-                    const char *submenu2Options[] = {
-                        "Submenu 2 - Option 1",
-                        "Submenu 2 - Option 2"
-                    };
-                    int numSubmenu2Options = 2;
-
-                    int submenu2Choice;
-                    do {
-                        displayMenu(submenu2Title, submenu2Options, numSubmenu2Options);
-                        submenu2Choice = getUserChoice(numSubmenu2Options);
-                        if (submenu2Choice != 0) {
-                            handleSubmenu2Option(submenu2Choice);
-                        }
-                    } while (submenu2Choice != 0);
-                }
+                do {
+                    displayMenu(submenu2Title, submenu2Options, numSubmenu2Options);
+                    choice = getUserChoice(numSubmenu2Options);
+                    handleSubmenuOption(choice, submenu2Options, numSubmenu2Options);
+                } while (choice != 0);
                 break;
             default:
                 printf("Exiting...\n");
