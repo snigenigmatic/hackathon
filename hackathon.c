@@ -35,7 +35,7 @@ Keep any one department and display all the employees in that department
 
 PART - B
 
-Print the $th part that is employee details in the following format and print it in a csv called PESU.csv
+Print the 4th part that is employee details in the following format and print it in a csv called PESU.csv
 */
 
 #include <stdio.h>
@@ -84,6 +84,7 @@ void createEmployee();
 void displayEmployeeRules();
 void displayEmployeeFacilities();
 void displayAndWriteToCSV(char *department);
+void disp_emp(Employee *x, int count);
 
 int main()
 {
@@ -110,11 +111,12 @@ int main()
             displayEmployeeFacilities();
         case 4:
             disp_emp(employees, numEmployees);
-            break;  
+            break;
         case 5:
             printf("Enter the department: ");
             scanf("%s", department);
             displayAndWriteToCSV(department);
+            disp_emp(employees, numEmployees);
             break;
         case 6:
             printf("Exiting...\n");
@@ -122,7 +124,7 @@ int main()
         default:
             printf("Invalid choice. Try again.\n");
         }
-    } while (choice != 3);
+    } while (choice != 0);
 
     return 0;
 }
@@ -169,7 +171,7 @@ void displayEmployeeRules()
 
 void displayEmployeeFacilities()
 {
-    struct EmployeeFacilities facilities = {"INR 5 Lakh for the whole family of the Employee", "Four and Two wheeler", "INR 3000 per month", "Free Early Membership", "Unlimited Access", "One for the employee and a plus onme", "One week Paid Leave", "One Per Year"};
+    struct EmployeeFacilities facilities = {"INR 5 Lakh for the whole family of the Employee", "Four and Two wheeler", "INR 3000 per month", "Free Yearly Membership", "Unlimited Access", "One for the employee and a plus onme", "One week Paid Leave", "One Per Year"};
 
     printf("\nEmployee Facilities:\n");
     printf("Insurance: %s\n", facilities.insurance);
